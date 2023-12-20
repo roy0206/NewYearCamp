@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 10.0f;     // ¿òÁ÷ÀÌ´Â ¼Óµµ. publicÀ¸·Î ¼³Á¤ÇÏ¿© À¯´ÏÆ¼ È­¸é¿¡¼­ Á¶Á¤ÇÒ ¼ö ÀÖ´Ù.
+    public float speed = 10.0f;     // ì›€ì§ì´ëŠ” ì†ë„. publicìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ìœ ë‹ˆí‹° í™”ë©´ì—ì„œ ì¡°ì •í•  ìˆ˜ ìˆë‹¤.
     public float hp = 3;
     float h, v;
 
@@ -34,6 +35,10 @@ public class Player : MonoBehaviour
             setTime += Time.deltaTime;
             countdownText.text = setTime.ToString("F2");
         }
+        if (hp <= 0)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
 
     }
 
@@ -46,12 +51,17 @@ public class Player : MonoBehaviour
             if (speed == 15.0f)
             {
                 Debug.Log("Break");
-                Destroy(collision.gameObject);//ºÎµúÈù ¿ÀºêÁ§Æ® Á¦°Å
+                Destroy(collision.gameObject);//ë¶€ë”ªíŒ ì˜¤ë¸Œì íŠ¸ ì œê±°
             }
             else
             {
                 hp -= 1;
                 Debug.Log("HP : " + hp);
+                if (hp <= 0)
+                {
+                  
+                    SceneManager.LoadScene("GameOverScene");
+                }
             }
  
 
