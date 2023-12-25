@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
         [Header("스피드 아이템")]
         public float boostSpeed;
         public float boostCoolTime;
+
+        [Header("키 커스텀")]
+        public KeyCode jumpKey, SlideKey;
     }
     public Info info;
     

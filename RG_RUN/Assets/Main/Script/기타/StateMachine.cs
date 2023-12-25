@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class StateMachine
 {
-    private Player player;
+    private Controller con;
     private State currentState;
 
     public void Setup(State defaultState)
     {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        con = GameObject.FindWithTag("Player").GetComponent<Controller>();
         currentState = null;
 
         ChangeState(defaultState);
@@ -17,7 +17,7 @@ public class StateMachine
 
     public void Execute()
     {
-        if (currentState != null) currentState.Execute(player);
+        if (currentState != null) currentState.Execute(con);
     }
 
     public void ChangeState(State newState)
@@ -25,6 +25,6 @@ public class StateMachine
         if (newState == null) return;
 
         currentState = newState;
-        currentState.Enter(player);
+        currentState.Enter(con);
     }
 }
