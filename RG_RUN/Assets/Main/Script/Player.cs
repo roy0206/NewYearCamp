@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     public bool isAllowedDamage;
     public bool isJumping, isSliding, allowDamaged;
 
-
     Rigidbody2D rb;
     Animator animator;
 
@@ -67,13 +66,13 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        print("Ãæµ¹!");
         if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, 12);
             animator.SetBool("do_jump", true);
             isSliding = false;
-
-            return;
+            
         }
 
         if (isSliding)

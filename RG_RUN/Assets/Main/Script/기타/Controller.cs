@@ -43,6 +43,7 @@ public class Controller : MonoBehaviour
     {
         Execute();
         CheckCoolTime();
+        countdownText.text = setTime.ToString("F2");
         DoubleJump();
         print(allowDoubleJump);
     }
@@ -88,7 +89,7 @@ public class Controller : MonoBehaviour
     void CheckCoolTime()
     {
         setTime -= Time.unscaledDeltaTime;
-        countdownText.text = setTime.ToString("F2");
+        
 
         if (setTime == 0 && currentState == states[0]) return;
         if (setTime < 0)
