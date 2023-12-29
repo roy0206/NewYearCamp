@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Controller : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class Controller : MonoBehaviour
     public Player player;
 
     public float setTime = 0f;
-    [SerializeField] Text countdownText;
 
     public float doubleJumpInterval;
     float minInterval = 0.01f;
@@ -20,6 +20,8 @@ public class Controller : MonoBehaviour
 
     Rigidbody2D rb;
     Animator animator;
+    CapsuleCollider2D capsuleCollider1;
+    CapsuleCollider2D capsuleCollider2;
 
     public State currentState;
     public List<State> states;
@@ -28,7 +30,6 @@ public class Controller : MonoBehaviour
     {
         //player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player =GetComponent<Player>();
-        countdownText.text = setTime.ToString();
 
         states = new List<State>
         {new Idle(), new Run()};
@@ -36,6 +37,11 @@ public class Controller : MonoBehaviour
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        capsuleCollider1 = GetComponents<CapsuleCollider2D>()[0];
+        capsuleCollider2 = GetComponents<CapsuleCollider2D>()[1];
+
+        transform.localScale = new Vector3(0.6f,0.6f,1);
+
     }
 
     // Update is called once per frame
@@ -43,9 +49,19 @@ public class Controller : MonoBehaviour
     {
         Execute();
         CheckCoolTime();
-        countdownText.text = setTime.ToString("F2");
         DoubleJump();
         print(allowDoubleJump);
+
+        if (animator.GetBool("do_slide"))
+        {
+            capsuleCollider1.enabled = false;
+            capsuleCollider2.enabled = true;
+        }
+        else
+        {
+            capsuleCollider1.enabled = true;
+            capsuleCollider2.enabled = false;
+        }
     }
 
     public void ChangeState(State newState)
@@ -67,11 +83,9 @@ public class Controller : MonoBehaviour
             && doubleJumpInterval > minInterval
             && doubleJumpInterval < maxInterval && allowDoubleJump)
         {
-            print(minInterval);
-            print(maxInterval);
             allowDoubleJump = false;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 8);
-            animator.SetBool("do_jump", true);
+            animator.SetBool("double_jump", true);
         }
         if (Input.GetKeyUp(GameManager.instance.info.jumpKey)) doubleJumpInterval = 0;
         if (player.isJumping == false)
@@ -83,6 +97,7 @@ public class Controller : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         allowDoubleJump = true;
+        animator.SetBool("double_jump", false);
     }
 
 
@@ -99,20 +114,4 @@ public class Controller : MonoBehaviour
             return;
         }
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            if (currentState == states[1])
-            {
-                Destroy(collision.gameObject);
-            }
-            else
-            {
-                player.GetDamaged();
-            }
-        }
-
-    }
-
 }

@@ -15,6 +15,6 @@ public class CamController : MonoBehaviour
 
     private void Update()
     {
-        cam.transform.position = new Vector3(player.transform.position.x, Mathf.Clamp(player.transform.position.y, 1, 10), cam.transform.position.z);
+        cam.transform.position = new Vector3(player.transform.position.x, Mathf.Clamp(player.transform.position.y - 3, 1, 10), cam.transform.position.z);
     }
 }

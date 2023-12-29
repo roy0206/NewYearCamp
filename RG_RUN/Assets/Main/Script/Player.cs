@@ -10,20 +10,38 @@ using Mono.Cecil;
 public class Player : MonoBehaviour
 {
     public float speed;
-    public float hp;
+    public int hp;
+    public int maxHp;
     public bool isAllowedDamage;
-    public bool isJumping, isSliding, allowDamaged;
+    public bool isJumping, isSliding;
 
     Rigidbody2D rb;
     Animator animator;
+
+    [Space]
+
+    public GameObject heartLayout;
+    public GameObject heartPrefab;
+    public Sprite redHeart;
+    public Sprite voidHeart;
+    Image[] hearts;
 
     void Start()
     {
         speed = GameManager.instance.info.baseSpeed;
         hp = GameManager.instance.info.baseHp;
+        maxHp = GameManager.instance.info.baseHp;
         isAllowedDamage = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        hearts = new Image[hp];
+        for(int i = 0; i < hp; i++)
+        {
+            hearts[i] = Instantiate(heartPrefab).GetComponent<Image>();
+            hearts[i].transform.SetParent(heartLayout.transform);
+            hearts[i].transform.localScale = Vector3.one;
+        }
     }
 
 
@@ -31,6 +49,19 @@ public class Player : MonoBehaviour
     {
         Move();
         GetInput();
+
+        int i = 0;
+        while (i < hp)
+        {
+            hearts[i].sprite = redHeart;
+            i++;
+        }
+
+        while (i < maxHp) {
+            hearts[i].sprite = voidHeart;
+            i++;
+        }
+
         if (hp <= 0) EndGame();
     }
 
@@ -41,7 +72,7 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
-        SceneManager.LoadScene("GameOverScene");
+/*        SceneManager.LoadScene("GameOverScene");*/
     }
 
     void GetInput()
@@ -55,10 +86,10 @@ public class Player : MonoBehaviour
 
     public void GetDamaged()
     {
-        if (allowDamaged)
+        if (isAllowedDamage)
         {
             hp -= 1;
-            allowDamaged = false;
+            isAllowedDamage = false;
             Invoke("AllowDamaged", 2f);
         }
     }
@@ -89,7 +120,7 @@ public class Player : MonoBehaviour
 
     void AllowDamaged()
     {
-        allowDamaged = true;
+        isAllowedDamage = true;
     }
 
 }
