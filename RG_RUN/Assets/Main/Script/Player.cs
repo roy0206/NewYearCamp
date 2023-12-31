@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
         }
 
         if (hp <= 0) EndGame();
+
+        print(isAllowedDamage);
     }
 
     void Move()
@@ -97,7 +99,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        print("Ãæµ¹!");
         if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, 12);

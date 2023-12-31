@@ -9,7 +9,6 @@ namespace PlayerStatus
         public override void Enter(Controller con)
         {
             Time.timeScale = 1;
-            con.player.isAllowedDamage = true;
         }
         public override void Execute(Controller con)
         {
@@ -25,7 +24,6 @@ namespace PlayerStatus
         public override void Enter(Controller con)
         {
             Time.timeScale = GameManager.instance.info.boostSpeed / GameManager.instance.info.baseSpeed;
-            con.player.isAllowedDamage = false;
             con.setTime += GameManager.instance.info.boostCoolTime;
         }
         public override void Execute(Controller con)

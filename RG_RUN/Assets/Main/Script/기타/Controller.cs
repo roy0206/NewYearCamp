@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour
 
     public float doubleJumpInterval;
     float minInterval = 0.01f;
-    float maxInterval = 0.3f;
+    float maxInterval = 0.5f;
     public bool allowDoubleJump = true;
 
     Rigidbody2D rb;
@@ -50,7 +50,7 @@ public class Controller : MonoBehaviour
         Execute();
         CheckCoolTime();
         DoubleJump();
-        print(allowDoubleJump);
+
 
         if (animator.GetBool("do_slide"))
         {
