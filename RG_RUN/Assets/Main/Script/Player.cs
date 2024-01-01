@@ -64,7 +64,6 @@ public class Player : MonoBehaviour
 
         if (hp <= 0) EndGame();
 
-        print(isAllowedDamage);
     }
 
     void Move()
