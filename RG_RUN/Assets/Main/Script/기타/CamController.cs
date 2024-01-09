@@ -14,15 +14,15 @@ public class CamController : MonoBehaviour
         cam = GetComponent<Camera>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
-
         StartCoroutine(cor());
     }
 
     private void Update()
     {
-        cam.transform.position = new Vector3(player.transform.position.x, Mathf.Clamp(player.transform.position.y - 3, 1, 10), cam.transform.position.z);
-
-
+        cam.transform.position = new Vector3
+            (player.transform.position.x,
+            Mathf.Clamp(player.transform.position.y - 3, 1, 10),
+            cam.transform.position.z);
     }
     IEnumerator cor()
     {

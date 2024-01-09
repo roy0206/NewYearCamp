@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
             i++;
         }
 
-        if (hp <= 0) EndGame();
+
 
     }
 
@@ -71,10 +71,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
-    void EndGame()
-    {
-/*        SceneManager.LoadScene("GameOverScene");*/
-    }
+
 
     void GetInput()
     {
@@ -122,5 +119,4 @@ public class Player : MonoBehaviour
     {
         isAllowedDamage = true;
     }
-
 }

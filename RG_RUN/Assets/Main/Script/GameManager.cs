@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +47,8 @@ public class GameManager : MonoBehaviour
     {
         float percent = (player.transform.position.x - startPoint.x) / distance * 100;
         if(percent >= 100) {
-            print("∞‘¿” ≥°");
+            text.gameObject.SetActive(false);
+            player.GetComponent<Controller>().EndGame(true);
         }
         
         text.text = percent.ToString("F0") + "%";
